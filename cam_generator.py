@@ -135,7 +135,6 @@ class ScoreCamSaliency:
             - np.repeat(y_prob, num_features, axis=0)
         )[:, self.target_index]
 
-        print(scores)
         scores_reshaped = scores.reshape(num_stations, num_features)
         scores_reshaped = self._softmax(scores_reshaped)
 
