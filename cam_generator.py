@@ -130,13 +130,11 @@ class ScoreCamSaliency:
             -1, feature_height, feature_width, num_channels
         )
 
-        scores = (
-            self.model.predict(masked_spectrograms_flatten, verbose=1)
-            - np.repeat(y_prob, num_features, axis=0)
-        )[:, self.target_index]
+        scores = (self.model.predict(masked_spectrograms_flatten, verbose=1))[
+            :, self.target_index
+        ]
 
         scores_reshaped = scores.reshape(num_stations, num_features)
-        scores_reshaped = self._softmax(scores_reshaped)
 
         all_station_score_map = np.einsum(
             "ijkl,ij->ikl", saliency_maps_resized, scores_reshaped
